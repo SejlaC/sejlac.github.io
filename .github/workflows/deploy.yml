@@ -33,6 +33,7 @@ jobs:
       - name: Build static site
         run: |
           npm run build
+          mkdir -p ./out
           touch ./out/.nojekyll
         env:
           GITHUB_ACTIONS: "true"
