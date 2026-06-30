@@ -1,8 +1,17 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: 'export',
-  // If you use next/image, you might also need to disable default image optimization:
-  // images: { unoptimized: true },
+import type { NextConfig } from "next";
+
+const repoName = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "";
+const isUserSite = repoName.endsWith(".github.io");
+const basePath = process.env.GITHUB_ACTIONS === "true" && !isUserSite && repoName ? `/${repoName}` : "";
+
+const nextConfig: NextConfig = {
+  output: "export",
+  trailingSlash: true,
+  basePath,
+  assetPrefix: basePath || undefined,
+  images: {
+    unoptimized: true,
+  },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
